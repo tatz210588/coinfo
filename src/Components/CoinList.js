@@ -124,7 +124,6 @@ class CoinList extends Component {
     super(props);
     this.state = {
       favorites: JSON.parse(localStorage.getItem('coinFavorites') || '[]'),
-      showAlerts: false,
       coinAlerts: {}
     };
   }
@@ -194,9 +193,7 @@ class CoinList extends Component {
     window.location.href = `/coin/${coin}`;
   };
 
-  toggleAlerts = () => {
-    this.setState(prevState => ({ showAlerts: !prevState.showAlerts }));
-  };
+  // Removed toggleAlerts method - alerts are now always visible
 
   render() {
     const coinz = this.props.coinz ? this.props.coinz : false;
@@ -307,15 +304,11 @@ class CoinList extends Component {
                       {this.state.coinAlerts[coinData.coin] && this.state.coinAlerts[coinData.coin].length > 0 && (
                         <span 
                           title={`${this.state.coinAlerts[coinData.coin].length} active price alert(s)`}
-                          onClick={() => this.setState({ showAlerts: true })}
                           style={{
                             color: '#21ce99',
                             fontSize: '14px',
-                            cursor: 'pointer',
                             transition: 'all 0.2s ease'
                           }}
-                          onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-                          onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                         >
                           <i className="fa fa-bell" aria-hidden="true"></i>
                         </span>
@@ -383,31 +376,14 @@ class CoinList extends Component {
                 </span>
               )}
             </h3>
-            <button
-              onClick={this.toggleAlerts}
-              style={{
-                background: this.state.showAlerts ? '#ff6b6b' : '#21ce99',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '10px 20px',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              {this.state.showAlerts ? 'Hide Alerts' : 'Show Alerts'}
-            </button>
+            {/* Toggle button removed - alerts are now always visible */}
           </div>
           
-          {this.state.showAlerts && (
-            <PriceAlert 
-              marketData={this.props.marketData}
-              currency={this.props.currency}
-              onAlertChange={this.refreshAlerts}
-            />
-          )}
+          <PriceAlert 
+            marketData={this.props.marketData}
+            currency={this.props.currency}
+            onAlertChange={this.refreshAlerts}
+          />
         </div>
       </React.Fragment>
     );
