@@ -105,6 +105,7 @@ const QuickActions = ({ coin, onEdit, onRemove, onToggleFavorite, isFavorite, on
   };
 
   const handleAction = (action) => {
+    console.log('QuickActions: Action triggered');
     setIsOpen(false);
     action();
   };
@@ -116,8 +117,11 @@ const QuickActions = ({ coin, onEdit, onRemove, onToggleFavorite, isFavorite, on
       </ActionsButton>
       
       {isOpen && (
-        <ActionsMenu>
-          <MenuItem onClick={() => handleAction(() => onViewDetails(coin))}>
+        <ActionsMenu onMouseDown={(e) => e.stopPropagation()}>
+          <MenuItem onClick={() => {
+            console.log('QuickActions: View Details clicked for coin:', coin);
+            handleAction(() => onViewDetails(coin));
+          }}>
             <MenuIcon>👁️</MenuIcon>
             View Details
           </MenuItem>

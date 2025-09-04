@@ -190,6 +190,7 @@ class CoinList extends Component {
 
   handleViewDetails = (coin) => {
     // Navigate to coin details page
+    console.log('Navigating to coin details:', coin);
     window.location.href = `/coin/${coin}`;
   };
 
